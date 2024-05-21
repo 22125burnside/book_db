@@ -64,6 +64,43 @@ def print_all_rating():
     db.close
 
 
+# print all the genres to chose from
+def print_all_genre():
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    # Put in my sql statement
+    sql = """SELECT *
+    FROM genre
+"""
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    # print it nicely
+    print("id    genre")
+    for book in results:
+        print(f"{book[0]:<6}{book[1]:<10}")
+    db.close
+
+
+# print all romantasy books
+def print_all_romantasy():
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    # Put in my sql statement
+    sql = """SELECT book.name, book.pages, book.rating, book.type, genre.genre_name, author.author_name
+    FROM book
+    JOIN genre ON book.genre_id = genre.genre_id
+    JOIN author on book.author_id = author.author_id
+    WHERE genre.genre_id = "1"
+"""
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    # print it nicely
+    print("Book Name                       Pages     Rating    Type           Genre          Author")
+    for book in results:
+        print(f"{book[0]:<32}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<15}{book[5]}")
+    db.close
+
+
 # Main Code
 while True:
     user_input = input(
@@ -72,6 +109,7 @@ What would you like to see?
 1. All the data
 2. All the books from least to most pages
 3. All the books from best to worst rating
+4. Show all the genres to chose from
 """)
     if user_input == "1":
         print_all_books()
@@ -79,3 +117,8 @@ What would you like to see?
         print_all_pages()
     elif user_input == "3":
         print_all_rating()
+    elif user_input == "4":
+        print_all_genre()
+        user_input = input("What genre would you like to see?\n")
+        if user_input == "1":
+            print_all_romantasy()
