@@ -44,7 +44,7 @@ def print_all_pages():
     db.close
 
 
-# print all data from all by rating (worst to best)
+# print all data from all by rating (best to worse)
 def print_all_rating():
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
@@ -53,7 +53,7 @@ def print_all_rating():
     FROM book
     JOIN genre ON book.genre_id = genre.genre_id
     JOIN author on book.author_id = author.author_id
-    ORDER BY book.rating ASC
+    ORDER BY book.rating DESC
 """
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -333,6 +333,48 @@ def print_all_hardcover():
     db.close
 
 
+# print all Paperback books
+def print_all_paperback():
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    # Put in my sql statement
+    sql = """SELECT book.name, book.pages, book.rating, book.type, genre.genre_name, author.author_name
+    FROM book
+    JOIN genre ON book.genre_id = genre.genre_id
+    JOIN author on book.author_id = author.author_id
+    WHERE book.type = "Paperback"
+    ORDER BY author.author_name ASC
+"""
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    # print it nicely
+    print("Book Name                                    Pages     Rating    Type           Genre               Author")
+    for book in results:
+        print(f"{book[0]:<45}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
+    db.close
+
+
+# print all Kindle books
+def print_all_kindle():
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    # Put in my sql statement
+    sql = """SELECT book.name, book.pages, book.rating, book.type, genre.genre_name, author.author_name
+    FROM book
+    JOIN genre ON book.genre_id = genre.genre_id
+    JOIN author on book.author_id = author.author_id
+    WHERE book.type = "Kindle"
+    ORDER BY author.author_name ASC
+"""
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    # print it nicely
+    print("Book Name                                    Pages     Rating    Type           Genre               Author")
+    for book in results:
+        print(f"{book[0]:<45}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
+    db.close
+
+
 # Main Code
 while True:
     user_input = input(
@@ -384,3 +426,7 @@ What would you like to see?
 """)
         if user_input == "1":
             print_all_hardcover()
+        elif user_input == "2":
+            print_all_paperback()
+        elif user_input == "3":
+            print_all_kindle()
