@@ -91,7 +91,7 @@ def print_all_romantasy():
     JOIN genre ON book.genre_id = genre.genre_id
     JOIN author on book.author_id = author.author_id
     WHERE genre.genre_id = "1"
-    ORDER BY author_name ASC
+    ORDER BY author.author_name ASC
 """
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -112,7 +112,7 @@ def print_all_romance():
     JOIN genre ON book.genre_id = genre.genre_id
     JOIN author on book.author_id = author.author_id
     WHERE genre.genre_id = "2"
-    ORDER BY author_name ASC
+    ORDER BY author.author_name ASC
 """
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -133,7 +133,7 @@ def print_all_fantasy():
     JOIN genre ON book.genre_id = genre.genre_id
     JOIN author on book.author_id = author.author_id
     WHERE genre.genre_id = "3"
-    ORDER BY author_name ASC
+    ORDER BY author.author_name ASC
 """
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -154,7 +154,7 @@ def print_all_history():
     JOIN genre ON book.genre_id = genre.genre_id
     JOIN author on book.author_id = author.author_id
     WHERE genre.genre_id = "4"
-    ORDER BY author_name ASC
+    ORDER BY author.author_name ASC
 """
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -175,7 +175,7 @@ def print_all_thriller():
     JOIN genre ON book.genre_id = genre.genre_id
     JOIN author on book.author_id = author.author_id
     WHERE genre.genre_id = "5"
-    ORDER BY author_name ASC
+    ORDER BY author.author_name ASC
 """
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -196,7 +196,7 @@ def print_all_mystery():
     JOIN genre ON book.genre_id = genre.genre_id
     JOIN author on book.author_id = author.author_id
     WHERE genre.genre_id = "6"
-    ORDER BY author_name ASC
+    ORDER BY author.author_name ASC
 """
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -217,7 +217,7 @@ def print_all_dystopian():
     JOIN genre ON book.genre_id = genre.genre_id
     JOIN author on book.author_id = author.author_id
     WHERE genre.genre_id = "7"
-    ORDER BY author_name ASC
+    ORDER BY author.author_name ASC
 """
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -238,7 +238,7 @@ def print_all_contemporary():
     JOIN genre ON book.genre_id = genre.genre_id
     JOIN author on book.author_id = author.author_id
     WHERE genre.genre_id = "8"
-    ORDER BY author_name ASC
+    ORDER BY author.author_name ASC
 """
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -259,7 +259,7 @@ def print_all_classic():
     JOIN genre ON book.genre_id = genre.genre_id
     JOIN author on book.author_id = author.author_id
     WHERE genre.genre_id = "9"
-    ORDER BY author_name ASC
+    ORDER BY author.author_name ASC
 """
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -280,7 +280,7 @@ def print_all_mythology():
     JOIN genre ON book.genre_id = genre.genre_id
     JOIN author on book.author_id = author.author_id
     WHERE genre.genre_id = "10"
-    ORDER BY author_name ASC
+    ORDER BY author.author_name ASC
 """
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -301,7 +301,28 @@ def print_all_horror():
     JOIN genre ON book.genre_id = genre.genre_id
     JOIN author on book.author_id = author.author_id
     WHERE genre.genre_id = "11"
-    ORDER BY author_name ASC
+    ORDER BY author.author_name ASC
+"""
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    # print it nicely
+    print("Book Name                                    Pages     Rating    Type           Genre               Author")
+    for book in results:
+        print(f"{book[0]:<45}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
+    db.close
+
+
+# print all hardcover books
+def print_all_hardcover():
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    # Put in my sql statement
+    sql = """SELECT book.name, book.pages, book.rating, book.type, genre.genre_name, author.author_name
+    FROM book
+    JOIN genre ON book.genre_id = genre.genre_id
+    JOIN author on book.author_id = author.author_id
+    WHERE book.type = "Hardcover"
+    ORDER BY author.author_name ASC
 """
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -321,6 +342,7 @@ What would you like to see?
 2. All the books from least to most pages
 3. All the books from best to worst rating
 4. Show all the genres to chose from
+5. Show all the types of books to chose from
 """)
     if user_input == "1":
         print_all_books()
@@ -353,3 +375,12 @@ What would you like to see?
             print_all_mythology()
         elif user_input == "11":
             print_all_horror()
+        else:
+            print("That was not an option :(")
+    elif user_input == "5":
+        user_input = input("""1. Hardcover
+2. Paperback
+3. Kindle
+""")
+        if user_input == "1":
+            print_all_hardcover()
