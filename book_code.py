@@ -15,11 +15,14 @@ def print_all_books():
     FROM book
     JOIN genre ON book.genre_id = genre.genre_id
     JOIN author on book.author_id = author.author_id
-    ORDER BY book.id ASC"""
+    ORDER BY author.auther_name ASC"""
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
-    print("Book Name                                         Pages     Rating    Type           Genre               Author")
+    print("""
+-----------------------------------------------------------------------------------------------------------------------
+Book Name                                         Pages     Rating    Type           Genre               Author
+-----------------------------------------------------------------------------------------------------------------------""")
     for book in results:
         print(f"{book[0]:<50}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
     db.close
@@ -38,7 +41,10 @@ def print_all_pages():
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
-    print("Book Name                                         Pages     Rating    Type           Genre               Author")
+    print("""
+-----------------------------------------------------------------------------------------------------------------------
+Book Name                                         Pages     Rating    Type           Genre               Author
+-----------------------------------------------------------------------------------------------------------------------""")
     for book in results:
         print(f"{book[0]:<50}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
     db.close
@@ -58,7 +64,10 @@ def print_all_rating():
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
-    print("Book Name                                         Pages     Rating    Type           Genre               Author")
+    print("""
+-----------------------------------------------------------------------------------------------------------------------
+Book Name                                         Pages     Rating    Type           Genre               Author
+-----------------------------------------------------------------------------------------------------------------------""")
     for book in results:
         print(f"{book[0]:<50}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
     db.close
@@ -75,7 +84,10 @@ def print_all_genre():
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
-    print("id    genre")
+    print("""
+--------------
+id    genre
+--------------""")
     for book in results:
         print(f"{book[0]:<6}{book[1]:<10}")
     db.close
@@ -96,7 +108,10 @@ def print_all_romantasy():
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
-    print("Book Name                       Pages     Rating    Type           Genre          Author")
+    print("""
+-----------------------------------------------------------------------------------------------------------------------
+Book Name                                         Pages     Rating    Type           Genre               Author
+-----------------------------------------------------------------------------------------------------------------------""")
     for book in results:
         print(f"{book[0]:<32}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<15}{book[5]}")
     db.close
@@ -117,7 +132,10 @@ def print_all_romance():
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
-    print("Book Name                                    Pages     Rating    Type           Genre               Author")
+    print("""
+-----------------------------------------------------------------------------------------------------------------------
+Book Name                                         Pages     Rating    Type           Genre               Author
+-----------------------------------------------------------------------------------------------------------------------""")
     for book in results:
         print(f"{book[0]:<45}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
     db.close
@@ -138,7 +156,10 @@ def print_all_fantasy():
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
-    print("Book Name                                    Pages     Rating    Type           Genre               Author")
+    print("""
+-----------------------------------------------------------------------------------------------------------------------
+Book Name                                         Pages     Rating    Type           Genre               Author
+-----------------------------------------------------------------------------------------------------------------------""")
     for book in results:
         print(f"{book[0]:<45}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
     db.close
@@ -159,7 +180,10 @@ def print_all_history():
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
-    print("Book Name                                    Pages     Rating    Type           Genre               Author")
+    print("""
+-----------------------------------------------------------------------------------------------------------------------
+Book Name                                         Pages     Rating    Type           Genre               Author
+-----------------------------------------------------------------------------------------------------------------------""")
     for book in results:
         print(f"{book[0]:<45}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
     db.close
@@ -180,7 +204,10 @@ def print_all_thriller():
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
-    print("Book Name                                    Pages     Rating    Type           Genre               Author")
+    print("""
+-----------------------------------------------------------------------------------------------------------------------
+Book Name                                         Pages     Rating    Type           Genre               Author
+-----------------------------------------------------------------------------------------------------------------------""")
     for book in results:
         print(f"{book[0]:<45}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
     db.close
@@ -201,7 +228,10 @@ def print_all_mystery():
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
-    print("Book Name                                    Pages     Rating    Type           Genre               Author")
+    print("""
+-----------------------------------------------------------------------------------------------------------------------
+Book Name                                         Pages     Rating    Type           Genre               Author
+-----------------------------------------------------------------------------------------------------------------------""")
     for book in results:
         print(f"{book[0]:<45}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
     db.close
@@ -222,7 +252,10 @@ def print_all_dystopian():
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
-    print("Book Name                                    Pages     Rating    Type           Genre               Author")
+    print("""
+-----------------------------------------------------------------------------------------------------------------------
+Book Name                                         Pages     Rating    Type           Genre               Author
+-----------------------------------------------------------------------------------------------------------------------""")
     for book in results:
         print(f"{book[0]:<45}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
     db.close
@@ -243,7 +276,10 @@ def print_all_contemporary():
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
-    print("Book Name                                    Pages     Rating    Type           Genre               Author")
+    print("""
+-----------------------------------------------------------------------------------------------------------------------
+Book Name                                         Pages     Rating    Type           Genre               Author
+-----------------------------------------------------------------------------------------------------------------------""")
     for book in results:
         print(f"{book[0]:<45}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
     db.close
@@ -264,7 +300,10 @@ def print_all_classic():
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
-    print("Book Name                                    Pages     Rating    Type           Genre               Author")
+    print("""
+-----------------------------------------------------------------------------------------------------------------------
+Book Name                                         Pages     Rating    Type           Genre               Author
+-----------------------------------------------------------------------------------------------------------------------""")
     for book in results:
         print(f"{book[0]:<45}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
     db.close
@@ -285,7 +324,10 @@ def print_all_mythology():
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
-    print("Book Name                                    Pages     Rating    Type           Genre               Author")
+    print("""
+-----------------------------------------------------------------------------------------------------------------------
+Book Name                                         Pages     Rating    Type           Genre               Author
+-----------------------------------------------------------------------------------------------------------------------""")
     for book in results:
         print(f"{book[0]:<45}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
     db.close
@@ -306,7 +348,10 @@ def print_all_horror():
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
-    print("Book Name                                    Pages     Rating    Type           Genre               Author")
+    print("""
+-----------------------------------------------------------------------------------------------------------------------
+Book Name                                         Pages     Rating    Type           Genre               Author
+-----------------------------------------------------------------------------------------------------------------------""")
     for book in results:
         print(f"{book[0]:<45}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
     db.close
@@ -327,7 +372,10 @@ def print_all_hardcover():
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
-    print("Book Name                                    Pages     Rating    Type           Genre               Author")
+    print("""
+-----------------------------------------------------------------------------------------------------------------------
+Book Name                                         Pages     Rating    Type           Genre               Author
+-----------------------------------------------------------------------------------------------------------------------""")
     for book in results:
         print(f"{book[0]:<45}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
     db.close
@@ -348,7 +396,10 @@ def print_all_paperback():
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
-    print("Book Name                                    Pages     Rating    Type           Genre               Author")
+    print("""
+-----------------------------------------------------------------------------------------------------------------------
+Book Name                                         Pages     Rating    Type           Genre               Author
+-----------------------------------------------------------------------------------------------------------------------""")
     for book in results:
         print(f"{book[0]:<45}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
     db.close
@@ -369,7 +420,10 @@ def print_all_kindle():
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
-    print("Book Name                                    Pages     Rating    Type           Genre               Author")
+    print("""
+-----------------------------------------------------------------------------------------------------------------------
+Book Name                                         Pages     Rating    Type           Genre               Author
+-----------------------------------------------------------------------------------------------------------------------""")
     for book in results:
         print(f"{book[0]:<45}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
     db.close
