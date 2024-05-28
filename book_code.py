@@ -15,7 +15,7 @@ def print_all_books():
     FROM book
     JOIN genre ON book.genre_id = genre.genre_id
     JOIN author on book.author_id = author.author_id
-    ORDER BY author.auther_name ASC"""
+    ORDER BY author.author_name ASC"""
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
@@ -434,11 +434,16 @@ while True:
     user_input = input(
         """
 What would you like to see?
+----------------------------------------------------------
 1. All the data
 2. All the books from least to most pages
 3. All the books from best to worst rating
 4. Show all the genres to chose from
 5. Show all the types of books to chose from
+6. Add a new book into the database
+7. Exit
+----------------------------------------------------------
+Type in the number of what you would like to see:
 """)
     if user_input == "1":
         print_all_books()
@@ -484,3 +489,5 @@ What would you like to see?
             print_all_paperback()
         elif user_input == "3":
             print_all_kindle()
+    elif user_input == "7":
+        break
