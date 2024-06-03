@@ -429,7 +429,28 @@ Book Name                                         Pages     Rating    Type      
     db.close
 
 
-# Add a new data to database :)
+# print all author table
+def print_all_author():
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    # Put in my sql statement
+    sql = """SELECT *
+    FROM author
+    ORDER BY author_id ASC
+"""
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    # print it nicely
+    print("""
+-----------------------------------------------------
+Id        Author name
+-----------------------------------------------------""")
+    for book in results:
+        print(f"{book[0]:<10}{book[1]:<10}")
+    db.close
+
+
+# Add a new data to book database :)
 def add_new_data():
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
@@ -455,8 +476,11 @@ What would you like to see?
 3. All the books from best to worst rating
 4. Show all the genres to chose from
 5. Show all the types of books to chose from
-6. ADMIN: Add a new book into the database
-7. Exit
+6. Show all authors
+7. ADMIN: Add a new book into the database
+8. ADMIN: Add an author into database
+9. ADMIN: Add a genre into database
+10. Exit
 ----------------------------------------------------------
 Type in the number of what you would like to see:
 """)
@@ -505,11 +529,13 @@ Type in the number of what you would like to see:
         elif user_input == "3":
             print_all_kindle()
     elif user_input == "6":
+        print_all_author()
+    elif user_input == "7":
         user_input = input("What is the password?\n")
         if user_input == "broke for books":
             add_new_data()
         else:
             print("Wrong! Better luck next time :)")
             break
-    elif user_input == "7":
+    elif user_input == "10":
         break
