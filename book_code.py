@@ -465,6 +465,16 @@ def add_new_data():
     db.close()
 
 
+# Add a new data to author database :)
+def add_new_author():
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    author_name = input("Author name:\n")
+    cursor.execute('INSERT INTO author (author_name) VALUES (?)', (author_name, ))
+    db.commit()
+    db.close()
+
+
 # Main Code
 while True:
     user_input = input(
@@ -532,10 +542,17 @@ Type in the number of what you would like to see:
         print_all_author()
     elif user_input == "7":
         user_input = input("What is the password?\n")
-        if user_input == "broke for books":
+        if user_input == "broke_for_books":
             add_new_data()
         else:
-            print("Wrong! Better luck next time :)")
+            print("WRONG! Better luck next time :)")
+            break
+    elif user_input == "8":
+        user_input = input("What is the password?\n")
+        if user_input == "broke_for_books":
+            add_new_author()
+        else:
+            print("WRONG! Better luck next time :)")
             break
     elif user_input == "10":
         break
