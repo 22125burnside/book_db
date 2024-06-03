@@ -429,6 +429,21 @@ Book Name                                         Pages     Rating    Type      
     db.close
 
 
+# Add a new data to database :)
+def add_new_data():
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    book_name = input("Book name:\n")
+    pages = int(input("Number of pages:\n"))
+    rating = input("Average good reads rating:\n")
+    book_type = input("Kindle, Hardcover or Paperback?:\n")
+    authorid = int(input("Author id:\n"))
+    genreid = int(input("Genre id:\n"))
+    cursor.execute('INSERT INTO book (name, pages, rating, type, author_id, genre_id) VALUES (?, ?, ?, ?, ?, ?)', (book_name, pages, rating, book_type, authorid, genreid))
+    db.commit()
+    db.close()
+
+
 # Main Code
 while True:
     user_input = input(
@@ -440,7 +455,7 @@ What would you like to see?
 3. All the books from best to worst rating
 4. Show all the genres to chose from
 5. Show all the types of books to chose from
-6. Add a new book into the database
+6. ADMIN: Add a new book into the database
 7. Exit
 ----------------------------------------------------------
 Type in the number of what you would like to see:
@@ -489,5 +504,12 @@ Type in the number of what you would like to see:
             print_all_paperback()
         elif user_input == "3":
             print_all_kindle()
+    elif user_input == "6":
+        user_input = input("What is the password?\n")
+        if user_input == "broke for books":
+            add_new_data()
+        else:
+            print("Wrong! Better luck next time :)")
+            break
     elif user_input == "7":
         break
