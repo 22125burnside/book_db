@@ -458,21 +458,31 @@ def add_new_data():
     pages = int(input("Number of pages:\n"))
     rating = input("Average good reads rating:\n")
     book_type = input("Kindle, Hardcover or Paperback?:\n")
-    authorid = int(input("Author id:\n"))
+    authorid = add_author()
     genreid = int(input("Genre id:\n"))
     cursor.execute('INSERT INTO book (name, pages, rating, type, author_id, genre_id) VALUES (?, ?, ?, ?, ?, ?)', (book_name, pages, rating, book_type, authorid, genreid))
     db.commit()
     db.close()
 
 
-# Add a new data to author database :)
-def add_new_author():
+def add_author():
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
-    author_name = input("Author name:\n")
-    cursor.execute('INSERT INTO author (author_name) VALUES (?)', (author_name, ))
+    author_ask = input("What is the authors name:\n")
+    name = cursor.execute('SELECT * FROM author WHERE author_name = ?', (author_ask,)).fetchone()
+    author_id = None
+    if name is None:
+        cursor.execute('INSERT INTO author (author_name) VALUES (?)', (author_ask,))
+        db.commit()
+        current_author = (cursor.lastrowid, author_ask)
+        print(current_author)
+        author_id = cursor.lastrowid
+    else:
+        current_author = name
+        author_id = name[0]
     db.commit()
     db.close()
+    return author_id
 
 
 # Main Code
@@ -488,9 +498,7 @@ What would you like to see?
 5. Show all the types of books to chose from
 6. Show all authors
 7. ADMIN: Add a new book into the database
-8. ADMIN: Add an author into database
-9. ADMIN: Add a genre into database
-10. Exit
+9. Exit
 ----------------------------------------------------------
 Type in the number of what you would like to see:
 """)
@@ -542,17 +550,11 @@ Type in the number of what you would like to see:
         print_all_author()
     elif user_input == "7":
         user_input = input("What is the password?\n")
-        if user_input == "broke_for_books":
+        if user_input == "123":
             add_new_data()
+            print("Data inputed")
         else:
             print("WRONG! Better luck next time :)")
             break
-    elif user_input == "8":
-        user_input = input("What is the password?\n")
-        if user_input == "broke_for_books":
-            add_new_author()
-        else:
-            print("WRONG! Better luck next time :)")
-            break
-    elif user_input == "10":
+    elif user_input == "9":
         break
