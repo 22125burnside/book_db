@@ -454,17 +454,34 @@ Id        Author name
 def add_new_data():
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
-    book_name = input("Book name:\n")
-    pages = int(input("Number of pages:\n"))
-    rating = input("Average good reads rating:\n")
-    book_type = input("Kindle, Hardcover or Paperback?:\n")
+    book_name = input("\nBook name:\n")
+    pages = int(input("\nNumber of pages:\n"))
+    rating = input("\nAverage good reads rating:\n")
+    book_type = input("\nKindle, Hardcover or Paperback:\n")
     authorid = add_author()
-    genreid = int(input("Genre id:\n"))
+    print("""
+--------------
+id    genre
+--------------
+1     Romantasy 
+2     Romance   
+3     Fantasy   
+4     Historical fiction
+5     Thriller  
+6     Mystery   
+7     Dystopian 
+8     Contemporary
+9     Classic   
+10    Mythology 
+11    Horror    
+12    Sci Fi    """)
+    genreid = int(input("\nGenre id:\n"))
     cursor.execute('INSERT INTO book (name, pages, rating, type, author_id, genre_id) VALUES (?, ?, ?, ?, ?, ?)', (book_name, pages, rating, book_type, authorid, genreid))
     db.commit()
     db.close()
 
 
+# add a new author to book data (connected to add new data function code)
 def add_author():
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
@@ -475,7 +492,7 @@ def add_author():
         cursor.execute('INSERT INTO author (author_name) VALUES (?)', (author_ask,))
         db.commit()
         current_author = (cursor.lastrowid, author_ask)
-        print(current_author)
+        print("Added a new author", current_author)
         author_id = cursor.lastrowid
     else:
         current_author = name
