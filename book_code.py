@@ -463,17 +463,17 @@ def add_new_data():
 --------------
 id    genre
 --------------
-1     Romantasy 
-2     Romance   
-3     Fantasy   
+1     Romantasy
+2     Romance
+3     Fantasy
 4     Historical fiction
-5     Thriller  
-6     Mystery   
-7     Dystopian 
+5     Thriller
+6     Mystery
+7     Dystopian
 8     Contemporary
-9     Classic   
-10    Mythology 
-11    Horror    
+9     Classic
+10    Mythology
+11    Horror
 12    Sci Fi    """)
     genreid = int(input("\nGenre id:\n"))
     cursor.execute('INSERT INTO book (name, pages, rating, type, author_id, genre_id) VALUES (?, ?, ?, ?, ?, ?)', (book_name, pages, rating, book_type, authorid, genreid))
@@ -502,6 +502,47 @@ def add_author():
     return author_id
 
 
+# function to search a book in database
+def search_book(cursor, search_term):
+    query = """SELECT book.name, book.pages, book.rating, book.type, genre.genre_name, author.author_name
+    FROM book
+    JOIN genre ON book.genre_id = genre.genre_id
+    JOIN author on book.author_id = author.author_id
+    WHERE book.name
+    LIKE ?"""
+    # execute query and search for user input
+    cursor.execute(query, ('%' + search_term + '%',))
+    search = cursor.fetchall()
+    return search
+
+
+# Function to search for book (connected to above)
+def search_for_books():
+    # add try and except loop
+    try:
+        db = sqlite3.connect(DATABASE)
+        cursor = db.cursor()
+        # ask what they want to see and connect to code above
+        search_term = input("Enter the name of the book: ")
+        results = search_book(cursor, search_term)
+        # print what books were found (if any)
+        if results:
+            print("\nBook results:")
+            for book in results:
+                print(f"Book name: {book[0]}  |  Pages: {book[1]}  |  Rating: {book[2]}  |  Type: {book[3]}  |  Genre: {book[4]}  |  Author: {book[5]}")
+        # if there is no book matching user input
+        else:
+            print("The book is not in the data base")
+        db.commit()
+    # Check for error and print if there is one
+    except sqlite3.Error as e:
+        print(f"This error happened: {e}")
+    # Close db
+    finally:
+        if db:
+            db.close()
+
+
 # Main Code
 while True:
     user_input = input(
@@ -514,7 +555,8 @@ What would you like to see?
 4. Show all the genres to chose from
 5. Show all the types of books to chose from
 6. Show all authors
-7. ADMIN: Add a new book into the database
+7. Search for a book
+8. ADMIN: Add a new book into the database
 9. Exit
 ----------------------------------------------------------
 Type in the number of what you would like to see:
@@ -566,6 +608,8 @@ Type in the number of what you would like to see:
     elif user_input == "6":
         print_all_author()
     elif user_input == "7":
+        search_for_books()
+    elif user_input == "8":
         user_input = input("What is the password?\n")
         if user_input == "123":
             add_new_data()
