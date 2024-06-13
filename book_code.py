@@ -357,6 +357,30 @@ Book Name                                         Pages     Rating    Type      
     db.close
 
 
+# print all scifi books
+def print_all_scifi():
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    # Put in my sql statement
+    sql = """SELECT book.name, book.pages, book.rating, book.type, genre.genre_name, author.author_name
+    FROM book
+    JOIN genre ON book.genre_id = genre.genre_id
+    JOIN author on book.author_id = author.author_id
+    WHERE genre.genre_id = "12"
+    ORDER BY author.author_name ASC
+"""
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    # print it nicely
+    print("""
+-----------------------------------------------------------------------------------------------------------------------
+Book Name                                         Pages     Rating    Type           Genre               Author
+-----------------------------------------------------------------------------------------------------------------------""")
+    for book in results:
+        print(f"{book[0]:<45}{book[1]:<10}{book[2]:<10}{book[3]:<15}{book[4]:<20}{book[5]:<20}")
+    db.close
+
+
 # print all hardcover books
 def print_all_hardcover():
     db = sqlite3.connect(DATABASE)
@@ -532,7 +556,7 @@ def search_for_books():
                 print(f"Book name: {book[0]}  |  Pages: {book[1]}  |  Rating: {book[2]}  |  Type: {book[3]}  |  Genre: {book[4]}  |  Author: {book[5]}")
         # if there is no book matching user input
         else:
-            print(f"The book {search_term} is not in the data base")
+            print(f'The book "{search_term}" is not in the data base')
         db.commit()
     # Check for error and print if there is one
     except sqlite3.Error as e:
@@ -586,83 +610,107 @@ def search_for_authors():
 
 # Main Code
 while True:
-    user_input = input(
-        """
+    user_input = input("Would you like to countinue Y/N\n").upper()
+    if user_input == "N":
+        break
+    if user_input == "Y":
+        user_input = input(
+            """
 What would you like to see?
 ----------------------------------------------------------
 1. All the data
-2. All the books from least to most pages
-3. All the books from best to worst rating
-4. Show all the genres to chose from
-5. Show all the types of books to chose from
-6. Show all authors
-7. Search for a book
-8. Search for an author
-9. ADMIN: Add a new book into the database
-10. Exit
+2. Show options to display all data
+3. Search for a book
+4. Search for an author
+5. ADMIN: Add a new book into the database
+6. Exit
 ----------------------------------------------------------
 Type in the number of what you would like to see:
 """)
-    if user_input == "1":
-        print_all_books()
-    elif user_input == "2":
-        print_all_pages()
-    elif user_input == "3":
-        print_all_rating()
-    elif user_input == "4":
-        print_all_genre()
-        user_input = input("What genre would you like to see?\n")
         if user_input == "1":
-            print_all_romantasy()
+            print_all_books()
         elif user_input == "2":
-            print_all_romance()
-        elif user_input == "3":
-            print_all_fantasy()
-        elif user_input == "4":
-            print_all_history()
-        elif user_input == "5":
-            print_all_thriller()
-        elif user_input == "6":
-            print_all_mystery()
-        elif user_input == "7":
-            print_all_dystopian()
-        elif user_input == "8":
-            print_all_contemporary()
-        elif user_input == "9":
-            print_all_classic()
-        elif user_input == "10":
-            print_all_mythology()
-        elif user_input == "11":
-            print_all_horror()
-        else:
-            print("That was not an option :(")
-    elif user_input == "5":
-        user_input = input("""1. Hardcover
+            user_input = input(
+                """
+What would you like to see?
+----------------------------------------------------------
+1. All the books from least to most pages
+2. All the books from best to worst rating
+3. Show all the genres to chose from
+4. Show all the types of books to chose from
+5. Show all authors
+6. Back to main page
+7. Exit
+----------------------------------------------------------
+Type in the number of what you would like to see:
+""")
+            if user_input == "1":
+                print_all_pages()
+            elif user_input == "2":
+                print_all_rating()
+            elif user_input == "3":
+                print_all_genre()
+                user_input = input("What genre would you like to see?\n")
+                if user_input == "1":
+                    print_all_romantasy()
+                elif user_input == "2":
+                    print_all_romance()
+                elif user_input == "3":
+                    print_all_fantasy()
+                elif user_input == "4":
+                    print_all_history()
+                elif user_input == "5":
+                    print_all_thriller()
+                elif user_input == "6":
+                    print_all_mystery()
+                elif user_input == "7":
+                    print_all_dystopian()
+                elif user_input == "8":
+                    print_all_contemporary()
+                elif user_input == "9":
+                    print_all_classic()
+                elif user_input == "10":
+                    print_all_mythology()
+                elif user_input == "11":
+                    print_all_horror()
+                elif user_input == "12":
+                    print_all_scifi()
+                else:
+                    print("That was not an option :(")
+            elif user_input == "4":
+                user_input = input("""
+1. Hardcover
 2. Paperback
 3. Kindle
 """)
-        if user_input == "1":
-            print_all_hardcover()
-        elif user_input == "2":
-            print_all_paperback()
+                if user_input == "1":
+                    print_all_hardcover()
+                elif user_input == "2":
+                    print_all_paperback()
+                elif user_input == "3":
+                    print_all_kindle()
+            elif user_input == "5":
+                print_all_author()
+            elif user_input == "6":
+                continue
+            else:
+                print("That was not an option :(")
         elif user_input == "3":
-            print_all_kindle()
-    elif user_input == "6":
-        print_all_author()
-    elif user_input == "7":
-        search_for_books()
-    elif user_input == "8":
-        search_for_authors()
-    elif user_input == "9":
-        user_input = input("What is the password?\n")
-        if user_input == "123":
-            add_new_data()
-            print("Data inputed")
-        else:
-            print("WRONG! Better luck next time :)")
+            search_for_books()
+        elif user_input == "4":
+            search_for_authors()
+        elif user_input == "5":
+            user_input = input("What is the password?\n")
+            if user_input == "broke_for_books":
+                add_new_data()
+                print("Data inputed")
+            else:
+                print("WRONG! Better luck next time :)")
+                break
+        elif user_input == "6":
             break
-    elif user_input == "10":
-        break
-    else:
-        print("""That was not an option :(
+        else:
+            print("""That was not an option :(
 Pick a number:""")
+    else:
+        print("That was not an option pick Y/N")
