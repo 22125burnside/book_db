@@ -532,7 +532,48 @@ def search_for_books():
                 print(f"Book name: {book[0]}  |  Pages: {book[1]}  |  Rating: {book[2]}  |  Type: {book[3]}  |  Genre: {book[4]}  |  Author: {book[5]}")
         # if there is no book matching user input
         else:
-            print("The book is not in the data base")
+            print(f"The book {search_term} is not in the data base")
+        db.commit()
+    # Check for error and print if there is one
+    except sqlite3.Error as e:
+        print(f"This error happened: {e}")
+    # Close db
+    finally:
+        if db:
+            db.close()
+
+
+# function to search a author in database
+def search_author(cursor, search_trm):
+    query = """SELECT book.name, book.pages, book.rating, book.type, genre.genre_name, author.author_name
+    FROM book
+    JOIN genre ON book.genre_id = genre.genre_id
+    JOIN author on book.author_id = author.author_id
+    WHERE author.author_name
+    LIKE ?"""
+    # execute query and search for user input
+    cursor.execute(query, ('%' + search_trm + '%',))
+    search = cursor.fetchall()
+    return search
+
+
+# Function to search for author (connected to above)
+def search_for_authors():
+    # add try and except loop
+    try:
+        db = sqlite3.connect(DATABASE)
+        cursor = db.cursor()
+        # ask what they want to see and connect to code above
+        search_trm = input("Enter the name of the author: ")
+        results = search_author(cursor, search_trm)
+        # print what books were found (if any)
+        if results:
+            print("\nAuthor results:")
+            for book in results:
+                print(f"Book name: {book[0]}  |  Pages: {book[1]}  |  Rating: {book[2]}  |  Type: {book[3]}  |  Genre: {book[4]}  |  Author: {book[5]}")
+        # if there is no book matching user input
+        else:
+            print(f"The author {search_trm} is not in the data base")
         db.commit()
     # Check for error and print if there is one
     except sqlite3.Error as e:
@@ -556,8 +597,9 @@ What would you like to see?
 5. Show all the types of books to chose from
 6. Show all authors
 7. Search for a book
-8. ADMIN: Add a new book into the database
-9. Exit
+8. Search for an author
+9. ADMIN: Add a new book into the database
+10. Exit
 ----------------------------------------------------------
 Type in the number of what you would like to see:
 """)
@@ -610,6 +652,8 @@ Type in the number of what you would like to see:
     elif user_input == "7":
         search_for_books()
     elif user_input == "8":
+        search_for_authors()
+    elif user_input == "9":
         user_input = input("What is the password?\n")
         if user_input == "123":
             add_new_data()
@@ -617,5 +661,8 @@ Type in the number of what you would like to see:
         else:
             print("WRONG! Better luck next time :)")
             break
-    elif user_input == "9":
+    elif user_input == "10":
         break
+    else:
+        print("""That was not an option :(
+Pick a number:""")
