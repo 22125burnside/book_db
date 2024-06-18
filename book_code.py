@@ -23,10 +23,10 @@ def print_all_books():
     # print it nicely
     print("""
 ----------------------------------------------------------------------------------------------------------------------------------
-Book Name                                     Pages     Rating    Type           Genre                    Author
+Book Name                                    Pages    Rating   Type          Genre                    Author
 ----------------------------------------------------------------------------------------------------------------------------------""")
     for book in results:
-        print(f"{book[0]:<42}  |  {book[1]:<5}  |  {book[2]:<5}  |  {book[3]:<10}  |  {book[4]:<20}  |  {book[5]}")
+        print(f"{book[0]:<42}  |  {book[1]:<3}  |  {book[2]:<4}  |  {book[3]:<9}  |  {book[4]:<20}  |  {book[5]}")
     db.close
 
 
@@ -39,16 +39,16 @@ def print_all_pages():
     FROM book
     JOIN genre ON book.genre_id = genre.genre_id
     JOIN author on book.author_id = author.author_id
-    ORDER BY book.pages ASC"""
+    ORDER BY book.pages DESC"""
     cursor.execute(sql)
     results = cursor.fetchall()
     # print it nicely
     print("""
 ----------------------------------------------------------------------------------------------------------------------------------
-Book Name                                     Pages     Rating    Type           Genre                    Author
+Book Name                                    Pages    Rating   Type          Genre                    Author
 ----------------------------------------------------------------------------------------------------------------------------------""")
     for book in results:
-        print(f"{book[0]:<42}  |  {book[1]:<5}  |  {book[2]:<5}  |  {book[3]:<10}  |  {book[4]:<20}  |  {book[5]}")
+        print(f"{book[0]:<42}  |  {book[1]:<3}  |  {book[2]:<4}  |  {book[3]:<9}  |  {book[4]:<20}  |  {book[5]}")
     db.close
 
 
@@ -68,10 +68,10 @@ def print_all_rating():
     # print it nicely
     print("""
 ----------------------------------------------------------------------------------------------------------------------------------
-Book Name                                     Pages     Rating    Type           Genre                    Author
+Book Name                                    Pages    Rating   Type          Genre                    Author
 ----------------------------------------------------------------------------------------------------------------------------------""")
     for book in results:
-        print(f"{book[0]:<42}  |  {book[1]:<5}  |  {book[2]:<5}  |  {book[3]:<10}  |  {book[4]:<20}  |  {book[5]}")
+        print(f"{book[0]:<42}  |  {book[1]:<3}  |  {book[2]:<4}  |  {book[3]:<9}  |  {book[4]:<20}  |  {book[5]}")
     db.close
 
 
@@ -331,7 +331,7 @@ def print_all_hardcover():
     results = cursor.fetchall()
     # print it nicely
     for book in results:
-        print(f"Book name: {book[0]:<50}  |  Pages: {book[1]:<5}  |  Rating: {book[2]:<5}  |  Type: {book[3]:<10}  |  Genre: {book[4]:<20}  |  Author: {book[5]}")
+        print(f"Book name: {book[0]:<45}  |  Pages: {book[1]:<3}  |  Rating: {book[2]:<4}  |  Type: {book[3]:<6}  |  Genre: {book[4]:<18}  |  Author: {book[5]}")
     db.close
 
 
@@ -351,7 +351,7 @@ def print_all_paperback():
     results = cursor.fetchall()
     # print it nicely
     for book in results:
-        print(f"Book name: {book[0]:<50}  |  Pages: {book[1]:<5}  |  Rating: {book[2]:<5}  |  Type: {book[3]:<10}  |  Genre: {book[4]:<20}  |  Author: {book[5]}")
+        print(f"Book name: {book[0]:<50}  |  Pages: {book[1]:<3}  |  Rating: {book[2]:<4}  |  Type: {book[3]:<6}  |  Genre: {book[4]:<18}  |  Author: {book[5]}")
     db.close
 
 
@@ -371,7 +371,7 @@ def print_all_kindle():
     results = cursor.fetchall()
     # print it nicely
     for book in results:
-        print(f"Book name: {book[0]:<50}  |  Pages: {book[1]:<5}  |  Rating: {book[2]:<5}  |  Type: {book[3]:<10}  |  Genre: {book[4]:<20}  |  Author: {book[5]}")
+        print(f"Book name: {book[0]:<35}  |  Pages: {book[1]:<3}  |  Rating: {book[2]:<4}  |  Type: {book[3]:<6}  |  Genre: {book[4]:<18}  |  Author: {book[5]}")
     db.close
 
 
@@ -561,7 +561,7 @@ Type in the number of what you would like to see:
                 """
 What would you like to see?
 ----------------------------------------------------------
-1. All the books from least to most pages
+1. All the books from most to least pages
 2. All the books from best to worst rating
 3. Show all the genres to chose from
 4. Show all the types of books to chose from
@@ -607,6 +607,7 @@ Type in the number of what you would like to see:
 1. Hardcover
 2. Paperback
 3. Kindle
+
 Type in the number you would like to see:
 """)
                 if user_input == "1":
